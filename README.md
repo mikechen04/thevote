@@ -2,7 +2,9 @@
 
 A live decision room for groups. People propose options, ask for an AI research brief on each, **vote blind**, and then reveal every score at once, so the first or loudest voice stops deciding for everyone.
 
-Built on the DeepSpace SDK. Live at the URL in the submission note.
+Built on the DeepSpace SDK. **Live: https://thevote.app.space** · Repo: https://github.com/mikechen04/thevote
+
+The three-user end-to-end test (`tests/quorum.spec.ts`) passes against both the local dev server and the deployed site.
 
 ## The flow
 
