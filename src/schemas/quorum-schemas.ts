@@ -1,5 +1,5 @@
 /**
- * Quorum collections.
+ * The Vote collections.
  *
  * Security model in one paragraph: a decision room is a "team". Every
  * room-scoped row carries `teamId` (= the room's recordId) and is readable

@@ -32,7 +32,7 @@ export default function JoinPage() {
           </Link>
         </>
       ) : (
-        <p className="text-sm text-muted-foreground">Taking a seat...</p>
+        <p className="text-sm text-muted-foreground">Taking a seat…</p>
       )}
     </div>
   )

@@ -56,7 +56,7 @@ export default function HomePage() {
       <section>
         <h1 className="font-display text-3xl font-semibold">Your rooms</h1>
         <div className="mt-5 divide-y divide-border border-y border-border">
-          {status === 'loading' && <p className="py-6 text-sm text-muted-foreground">Loading...</p>}
+          {status === 'loading' && <p className="py-6 text-sm text-muted-foreground">Loading…</p>}
           {status !== 'loading' && rooms.length === 0 && (
             <p className="py-8 text-sm text-muted-foreground">
               No rooms yet. Start one on the right, or paste an invite code if someone sent you one.
@@ -72,7 +72,7 @@ export default function HomePage() {
                 <span className="block font-display text-lg font-semibold">{r.data.title}</span>
                 <span className="text-xs text-muted-foreground">Owner: {r.data.ownerName ?? 'unknown'}</span>
               </span>
-              <span className="rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground">
+              <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
                 {PHASE_LABEL[r.data.phase] ?? r.data.phase}
               </span>
             </Link>
@@ -129,9 +129,9 @@ export default function HomePage() {
             aria-label="Invite code"
             placeholder="ABCD2345"
             maxLength={16}
-            className="font-mono uppercase tracking-widest"
+            className="font-mono"
             value={code}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={(e) => setCode(e.target.value.toUpperCase())}
           />
           <Button type="submit" variant="outline" className="w-full" disabled={!code.trim()} loading={busy === 'join'}>
             Join room

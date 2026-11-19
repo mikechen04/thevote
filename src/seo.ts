@@ -25,8 +25,8 @@ import { APP_NAME } from './constants'
 declare const __DEEPSPACE_SITE_ORIGIN__: string | undefined
 
 export const seo = {
-  title: 'Quorum | Blind group decisions',
-  description: 'Quorum is a live decision room: propose options, get an AI research brief on each, vote blind, then reveal where the group actually agrees.',
+  title: 'The Vote | Blind group decisions',
+  description: 'The Vote is a live decision room: propose options, get an AI research brief on each, vote blind, then reveal where the group actually agrees.',
   /** Public origin for canonical URLs, og:url, and the sitemap — no trailing
    *  slash. Replace with the custom domain once one is attached, e.g.
    *  'https://www.example.com'. */

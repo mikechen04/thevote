@@ -23,14 +23,9 @@ export const THEMES = [
     description: 'Neutral dark placeholder default. Replace with your own theme.',
   },
   {
-    id: 'quorum',
-    label: 'Quorum',
+    id: 'ballot',
+    label: 'Ballot',
     description: 'Parchment ballot paper with ink text and a single vermilion accent.',
-  },
-  {
-    id: 'paper',
-    label: 'Paper',
-    description: 'Light example theme showing the token contract. Replace or delete.',
   },
 ] as const
 
@@ -38,9 +33,9 @@ export type ThemeId = (typeof THEMES)[number]['id']
 
 /** Read the currently active theme id from <html data-theme>. */
 export function getActiveTheme(): ThemeId {
-  if (typeof document === 'undefined') return 'quorum'
+  if (typeof document === 'undefined') return 'ballot'
   const id = document.documentElement.getAttribute('data-theme') as ThemeId | null
-  return id ?? 'quorum'
+  return id ?? 'ballot'
 }
 
 /** Look up a theme entry by id, or fall back to the first theme. */

@@ -37,7 +37,7 @@ export default function ApiStatusPage() {
 
       {catalog.status === 'loading' ? (
         <div className="flex items-center justify-center gap-3 rounded-lg border border-border bg-card p-8 text-sm text-muted-foreground">
-          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+          <span className="h-4 w-4 animate-spin motion-reduce:animate-none rounded-full border-2 border-current border-t-transparent" aria-hidden />
           Loading integration catalog...
         </div>
       ) : catalog.status === 'error' ? (

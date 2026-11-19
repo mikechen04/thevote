@@ -68,7 +68,7 @@ export default function RoomPage() {
 
   const { records: roomRows, status: roomStatus } = useQuery<Room>('rooms', { where })
   const { records: members } = useQuery<Member>('team_members', { where })
-  const { records: options } = useQuery<Option>('options', { where, orderBy: 'createdAt' })
+  const { records: options } = useQuery<Option>('options', { where, orderBy: 'createdAt', orderDir: 'asc' })
   const { records: briefs } = useQuery<Brief>('briefs', { where })
   const { records: ballots } = useQuery<Ballot>('ballots', { where })
   const { records: myVotes } = useQuery<Vote>('votes', { where })
@@ -91,7 +91,7 @@ export default function RoomPage() {
     return true
   }
 
-  if (roomStatus === 'loading') return <p className="p-10 text-sm text-muted-foreground">Loading room...</p>
+  if (roomStatus === 'loading') return <p className="p-10 text-sm text-muted-foreground">Loading room…</p>
   if (!room) {
     return (
       <div className="mx-auto max-w-md px-4 py-24 text-center">
@@ -125,13 +125,13 @@ export default function RoomPage() {
             {r.question && <p className="mt-1 max-w-xl text-sm text-muted-foreground">{r.question}</p>}
           </div>
           <div className="text-right">
-            <p className="text-[11px] uppercase tracking-widest text-muted-foreground">Invite code</p>
+            <p className="text-xs text-muted-foreground">Invite code</p>
             <button
               onClick={() => {
                 navigator.clipboard?.writeText(inviteUrl)
                 success('Invite link copied')
               }}
-              className="mt-0.5 inline-flex items-center gap-2 rounded border border-dashed border-input px-3 py-1.5 font-mono text-sm tracking-widest hover:bg-card"
+              className="mt-0.5 inline-flex items-center gap-2 rounded border border-dashed border-input px-3 py-1.5 font-mono text-sm hover:bg-card"
               title="Copy invite link"
             >
               {r.inviteCode} <Link2 className="h-3.5 w-3.5" aria-hidden />
@@ -139,7 +139,7 @@ export default function RoomPage() {
           </div>
         </div>
 
-        <ol className="mt-6 flex items-center gap-2 text-xs uppercase tracking-wider" aria-label="Progress">
+        <ol className="mt-6 flex items-center gap-2 text-sm" aria-label="Progress">
           {PHASES.map((p, i) => {
             const current = PHASES.findIndex((x) => x.id === r.phase)
             return (
@@ -184,7 +184,7 @@ export default function RoomPage() {
                   />
                 </span>
                 {m.data.userName}
-                {m.data.userId === r.ownerId && <span className="text-[10px] uppercase text-muted-foreground">owner</span>}
+                {m.data.userId === r.ownerId && <span className="text-xs text-muted-foreground">owner</span>}
                 {r.phase === 'vote' && voted && (
                   <span className="flex items-center gap-0.5 text-xs text-success" title="Ballot submitted">
                     <Check className="h-3.5 w-3.5" aria-hidden /> voted
@@ -349,7 +349,7 @@ function OptionsSection({
               </div>
               {researching && (
                 <p className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
-                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> Searching the web and reading the results. About 10 seconds.
+                  <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" aria-hidden /> Searching the web and reading the results. About 10 seconds.
                 </p>
               )}
               {brief && <BriefCard brief={brief} />}
@@ -379,7 +379,7 @@ function OptionsSection({
 function BriefCard({ brief }: { brief: Brief }) {
   return (
     <div className="mt-4 border-t border-border pt-4 text-sm">
-      <p className="text-[11px] uppercase tracking-widest text-muted-foreground">AI research brief</p>
+      <p className="text-xs text-muted-foreground">AI research brief</p>
       {brief.summary && <p className="mt-1.5 leading-relaxed">{brief.summary}</p>}
       <div className="mt-3 grid gap-4 sm:grid-cols-2">
         <ul className="space-y-1">
@@ -446,10 +446,16 @@ function Ballot({
   const complete = options.every((o) => scores[o.recordId]?.score)
 
   return (
-    <section className="rounded-md border-2 border-foreground/80 bg-card p-5" onFocus={onFocus} onBlur={onBlur}>
+    <section
+      className="rounded-md border-2 border-foreground/80 bg-card p-5"
+      data-testid="ballot"
+      data-vote-rows={myVotes.length}
+      onFocus={onFocus}
+      onBlur={onBlur}
+    >
       <div className="flex items-baseline justify-between">
         <h2 className="font-display text-2xl font-semibold">Your ballot</h2>
-        <span className="text-xs uppercase tracking-widest text-muted-foreground">Private until reveal</span>
+        <span className="text-xs text-muted-foreground">Private until reveal</span>
       </div>
       <p className="mt-1 text-sm text-muted-foreground">1 = no way, 5 = yes please. You can change your answers until the owner reveals.</p>
       <ul className="mt-4 divide-y divide-border">
@@ -577,7 +583,7 @@ function Reveal({
     <section>
       {decided && winner && (
         <div className="mb-8 rounded-md border-2 border-primary bg-card p-6 text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-primary">Decided</p>
+          <p className="text-sm font-medium text-primary">Decided</p>
           <p className="mt-2 font-display text-4xl font-semibold">{winner.data.title}</p>
           {room.data.decisionNote && <p className="mt-3 text-muted-foreground">{room.data.decisionNote}</p>}
         </div>
@@ -586,7 +592,7 @@ function Reveal({
       <h2 className="font-display text-2xl font-semibold">The reveal</h2>
       {room.data.synthesis && (
         <div className="mt-4 rounded-md bg-muted p-4 text-sm leading-relaxed">
-          <p className="mb-1 text-[11px] uppercase tracking-widest text-muted-foreground">Facilitator&rsquo;s read (AI)</p>
+          <p className="mb-1 text-xs text-muted-foreground">Facilitator&rsquo;s read (AI)</p>
           {room.data.synthesis}
         </div>
       )}
